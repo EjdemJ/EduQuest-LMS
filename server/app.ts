@@ -1,39 +1,21 @@
 import express from "express";
 import cors from "cors";
+import cookieParser from "cookie-parser";
 
-const app = express();
+export const app = express();
+
+// body parser
+app.use(express.json({ limit: "50mb" }));
+
+// cookie parser
+app.use(cookieParser());
+
+// cors
+app.use(cors({ origin: process.env.ORIGIN }));
+
+// testing api
+app.get("/test", (req, res) => {
+  res.send("API is Working!");
+});
 
 export default app;
-
-app.use(cors());
-
-app.get("/", (req, res) => {
-  res.send("Hello World!");
-});
-
-app.get("/users", (req, res) => {
-  const users = [
-    {
-      name: "user 1",
-      id: 1,
-    },
-    {
-      name: "user 2",
-      id: 2,
-    },
-    {
-      name: "user 3",
-      id: 3,
-    },
-    {
-      name: "user 4",
-      id: 4,
-    },
-  ];
-  res.json(users);
-});
-
-app.get("/greetings", (req, res) => {
-  const greeting = "Hello World!";
-  res.json(greeting);
-});
